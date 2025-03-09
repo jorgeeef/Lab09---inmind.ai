@@ -4,9 +4,18 @@ namespace ChatService1.Hubs;
 
 public class ChatHub : Hub
 {
-    // Method to send a message to a specific user
-    public async Task SendMessage(string userId, string message)
+    public async Task SendMessage(string chatId, string user, string message)
     {
-        await Clients.User(userId).SendAsync("ReceiveMessage", message);
+        await Clients.Group(chatId).SendAsync("ReceiveMessage", user, message);
+    }
+
+    public async Task JoinChat(string chatId)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
+    }
+
+    public async Task LeaveChat(string chatId)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
     }
 }
