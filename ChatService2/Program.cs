@@ -1,5 +1,6 @@
 using ChatService1.Clients;
 using ChatService1.Hubs;
+using ChatService1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGrpcService<ChatHistoryService>();
+    endpoints.MapHub<ChatHub>("/chatHub");
+    endpoints.MapControllers();
+});
 
 app.MapHub<ChatHub>("/chatHub");
 

@@ -1,5 +1,6 @@
 using ChatService1.Clients;
 using ChatService1.Hubs;
+using ChatService2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddGrpc();
 builder.Services.AddSignalR();
 
 var app = builder.Build();
@@ -20,6 +21,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGrpcService<ChatHistoryService>();
+    endpoints.MapHub<ChatHub>("/chatHub");
+    endpoints.MapControllers();
+});
 
 app.MapHub<ChatHub>("/chatHub");
 
