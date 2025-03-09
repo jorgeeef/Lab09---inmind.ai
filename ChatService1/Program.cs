@@ -1,6 +1,8 @@
+using ChatService1;
 using ChatService1.Clients;
 using ChatService1.Hubs;
 using ChatService2.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddGrpc();
 builder.Services.AddSignalR();
+builder.Services.AddDbContext<ChtDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

@@ -131,3 +131,10 @@ C:\Users\user\RiderProjects\Lab09\ChatService1\obj\Debug\net8.0\refint\ChatServi
 C:\Users\user\RiderProjects\Lab09\ChatService1\obj\Debug\net8.0\ChatService1.pdb
 C:\Users\user\RiderProjects\Lab09\ChatService1\obj\Debug\net8.0\ChatService1.genruntimeconfig.cache
 C:\Users\user\RiderProjects\Lab09\ChatService1\obj\Debug\net8.0\ref\ChatService1.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Google.Protobuf.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Grpc.AspNetCore.Server.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Grpc.AspNetCore.Server.ClientFactory.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Grpc.Core.Api.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Grpc.Net.Client.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Grpc.Net.ClientFactory.dll
+C:\Users\user\RiderProjects\Lab09\ChatService1\bin\Debug\net8.0\Grpc.Net.Common.dll

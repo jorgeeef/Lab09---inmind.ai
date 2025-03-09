@@ -1,35 +1,33 @@
-﻿using Grpc.Core;
+﻿using ChatService1;
+using Grpc.Core;
+using Microsoft.EntityFrameworkCore;
 
-namespace ChatService1.Services;
+namespace ChatService2.Services;
 
 public class ChatHistoryService: ChatHistory.ChatHistoryBase
 {
-    private static readonly Dictionary<string, List<ChatMessage>> ChatMessages = new();
+    private readonly ChtDbContext _context;
 
-    public override Task<ChatHistoryResponse> GetChatHistory(ChatHistoryRequest request, ServerCallContext context)
+    public ChatHistoryService(ChtDbContext context)
     {
-        var response = new ChatHistoryResponse();
-
-        if (ChatMessages.TryGetValue(request.ChatId, out var messages))
-        {
-            response.Messages.AddRange(messages);
-        }
-
-        return Task.FromResult(response);
+        _context = context;
     }
 
-    public static void AddMessage(string chatId, string user, string message)
+    public override async Task<ChatHistoryResponse> GetChatHistory(ChatHistoryRequest request, ServerCallContext context)
     {
-        if (!ChatMessages.ContainsKey(chatId))
-        {
-            ChatMessages[chatId] = new List<ChatMessage>();
-        }
+        var messages = await _context.ChatMessages
+            .Where(m => m.ChatId == request.ChatId)
+            .OrderBy(m => m.Timestamp)
+            .Select(m => new ChatMessage
+            {
+                User = m.User,
+                Message = m.Message,
+                Timestamp = m.Timestamp.ToString("o")
+            })
+            .ToListAsync();
 
-        ChatMessages[chatId].Add(new ChatMessage
-        {
-            User = user,
-            Message = message,
-            Timestamp = DateTime.UtcNow.ToString("o")
-        });
+        var response = new ChatHistoryResponse();
+        response.Messages.AddRange(messages);
+        return response;
     }
 }
